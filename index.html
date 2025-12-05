@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>The Thinker - Your AI Assistant</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat">
+                    <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.5v15m7.5-7.5h-15"></path>
+                    </svg>
+                    Reset chat
+                </button>
+            </div>
+            <div class="sidebar-content">
+                <div class="conversations">
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-info" id="settingsBtn">
+                    <div class="user-avatar">Me</div>
+                    <div class="user-name">Me</div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="chat-container">
+                <div class="chat-window" id="chat"></div>
+                <div class="input-container">
+                    <form class="input-form">
+                        <div class="input-box">
+                            <textarea id="userInput" rows="1" placeholder="Message The Thinker..."></textarea>
+                            <button type="submit" id="sendBtn">
+                                <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="input-footer">
+                            The Thinker might produce inaccurate information, so check important stuff. I'm not responsible for anything that goes wrong, by the way. Built by aaron tibbitts.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2>Settings</h2>
+            <form id="settingsForm" onsubmit="handleSettingsSubmit(event)">
+                <div class="form-group">
+                    <label for="settingsInterests">Interests</label>
+                    <textarea id="settingsInterests" placeholder="Replace this with what you want aaron-o1 to know about you"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Save Settings</button>
+                    <button type="button" onclick="settingsModal.style.display='none'">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

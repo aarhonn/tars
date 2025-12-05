@@ -1,0 +1,46 @@
+name: Data API Proxy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install node-fetch@2
+
+      - name: Proxy Data API request
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          echo "Starting Data API proxy..."
+          echo '${{ github.event.inputs.payload }}' > payload.json
+          node <<EOF
+          const fetch = require('node-fetch');
+          const fs = require('fs');
+          const payload = JSON.parse(fs.readFileSync('payload.json', 'utf8'));
+
+          fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer "${process.env.GROQ_API_KEY}"`
+            },
+            body: JSON.stringify(payload)
+          })
+          .then(res => res.json())
+          .then(data => {
+            console.log("Groq response:");
+            console.log(JSON.stringify(data, null, 2));
+          })
+          .catch(err => {
+            console.error("Error:", err.message);
+          });
+          EOF
+
